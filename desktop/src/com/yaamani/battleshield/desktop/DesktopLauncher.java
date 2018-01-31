@@ -7,6 +7,11 @@ import com.yaamani.battleshield.BattleshieldGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+
+		//16:9
+		config.width = 800;
+		config.height = 450;
+
 		new LwjglApplication(new BattleshieldGame(), config);
 	}
 }
