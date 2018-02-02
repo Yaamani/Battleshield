@@ -53,16 +53,15 @@ public class BattleshieldGame extends Game {
 
         shapeRenderer.begin();
 
-        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.SKY);
         shapeRenderer.rect(0, 0, WORLD_SIZE, WORLD_SIZE);
 
-        //shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.circle(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, WORLD_SIZE / 2.3f);
+        shapeRenderer.circle(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, TURRET_SIZE);
 
         shapeRenderer.end();
-
 	}
 	
 	@Override
@@ -70,7 +69,7 @@ public class BattleshieldGame extends Game {
         shapeRenderer.dispose();
 	}
 
-    //The next 2 methods for calculating the aspect ratio.
+    //The next 2 methods for calculating the aspect ratio. from (https://codereview.stackexchange.com/a/26698)
 	private int gcd(int p, int q) {
         if (q == 0) return p;
         else return gcd(q, p % q);
