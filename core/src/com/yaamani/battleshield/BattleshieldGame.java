@@ -1,6 +1,7 @@
 package com.yaamani.battleshield;
 
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import static com.yaamani.battleshield.Utilities.Constants.*;
 
 
-public class BattleshieldGame extends Game {
+public class BattleshieldGame extends ApplicationAdapter {
 
     public static final String TAG = BattleshieldGame.class.getSimpleName();
 
