@@ -6,9 +6,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -23,14 +26,16 @@ public class BattleshieldGame extends ApplicationAdapter {
 
     private Viewport viewport;
 
-    private ShapeRenderer shapeRenderer;
+    private Stage stage;
 
 	@Override
 	public void create () {
         viewport = new ExtendViewport(WORLD_SIZE, WORLD_SIZE);
 
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+
+        stage.addActor(new MyActor());
     }
 
     @Override
@@ -50,24 +55,14 @@ public class BattleshieldGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
-        shapeRenderer.begin();
-
-        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.SKY);
-        shapeRenderer.rect(0, 0, WORLD_SIZE, WORLD_SIZE);
-
-        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.circle(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, TURRET_SIZE);
-
-        shapeRenderer.end();
+        stage.act();
+        stage.draw();
 	}
 	
 	@Override
 	public void dispose () {
-        shapeRenderer.dispose();
+        stage.dispose();
 	}
 
     //The next 2 methods for calculating the aspect ratio. from (https://codereview.stackexchange.com/a/26698)
@@ -79,5 +74,24 @@ public class BattleshieldGame extends ApplicationAdapter {
     private String ratio(int a, int b) {
         final int gcd = gcd(a,b);
         return a/gcd + ":" + b/gcd;
+    }
+
+    private class MyActor extends Actor {
+	    private MyActor() {
+	        setDebug(true);
+        }
+
+        @Override
+        public void drawDebug(ShapeRenderer shapes) {
+            shapes.set(ShapeRenderer.ShapeType.Line);
+            shapes.setColor(Color.SKY);
+            shapes.rect(0, 0, WORLD_SIZE, WORLD_SIZE);
+
+            shapes.set(ShapeRenderer.ShapeType.Filled);
+            shapes.setColor(Color.WHITE);
+            shapes.circle(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, TURRET_SIZE);
+
+            super.drawDebug(shapes);
+        }
     }
 }
